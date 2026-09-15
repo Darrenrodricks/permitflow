@@ -24,9 +24,19 @@ For infrequent applicants, it can be difficult to determine:
 
 When required information is missing or unclear, the application may need to move back and forth between the applicant and NYSDOT before technical review can be completed.
 
-PermitFlow explores whether **guided requirements, pre-submission checks, and a structured review workflow** can reduce avoidable review cycles while preserving NYSDOT staff judgment.
+NYSDOT’s own permit guidance identifies this kind of incomplete or insufficient submission as a source of delay. For commercial Highway Work Permits, NYSDOT says its guidance is intended to produce **better plan submissions, fewer requests for resubmission, and an overall faster review**. It also notes that plans lacking required information, or revisions that do not adequately address reviewer comments, may be returned for further revision.
 
-No measured impact is claimed by this prototype.
+The process can therefore create a repeated cycle:
+
+**submission → NYSDOT review → comments or missing information → applicant revision → resubmission → NYSDOT re-review**
+
+NYSDOT also identifies issues such as insufficient drawing detail, missing or outdated insurance, incomplete route information, and insufficient work descriptions as factors that can increase processing time.
+
+PermitFlow focuses on reducing the avoidable portion of that cycle.
+
+Instead of waiting for NYSDOT staff to discover basic completeness issues after submission, PermitFlow uses **guided requirements, pre-submission checks, and a structured review workflow** to help applicants understand what applies to their project and resolve obvious gaps before the application enters the review queue.
+
+The goal is not to replace technical review. It is to help more applications arrive ready for a meaningful first review, while keeping documents, revisions, and reviewer requests organized when additional coordination is still necessary.
 
 ---
 
