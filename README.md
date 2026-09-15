@@ -222,29 +222,6 @@ The most important initial metric would likely be:
 
 If more applications arrive with the information reviewers need, downstream cycle time should become easier to improve.
 
----
-
-## Future direction
-
-Before a production pilot, I would validate the workflow directly with both applicants and NYSDOT reviewers.
-
-Potential next steps include:
-
-- secure data and document storage
-- production identity and access controls
-- real document extraction with source evidence
-- configurable permit-requirement rules
-- NYSDOT system integrations
-- notifications
-- payments
-- document versioning and markup
-- GIS and location-aware requirements
-- audit logging and reporting
-- measurement against real permit-processing baselines
-
-I would prioritize these based on observed workflow bottlenecks rather than attempting to reproduce every RFP requirement at once.
-
----
 
 ## Central product idea
 
@@ -252,39 +229,6 @@ PermitFlow is built around one principle:
 
 > **Applicants describe their project. The system explains what applies, catches avoidable gaps early, and gives NYSDOT staff a structured submission while preserving human judgment for technical review and approval.**
 
----
-
-## Run locally
-
-Use Node.js 22 LTS (22.6 or newer). The included `.nvmrc` selects Node 22.
-
-```bash
-npm install
-npm run dev
-```
-
-Open http://localhost:3000. No environment variables, API keys, database, or external services are required.
-
-```bash
-npm test
-npm run typecheck
-npm run build
-npm start
-```
-
-Production builds use the supported Next.js Webpack build option.
-
-Permit state is saved in this browser only. Refresh returns to the applicant dashboard while preserving the permit. **Reset Demo** restores the original draft. Do not enter real personal information.
-
-## Deploy to Vercel
-
-1. Import `Darrenrodricks/permitflow` into Vercel.
-2. Select the **Next.js** preset, repository root, and **Node.js 24.x**.
-3. Use `npm ci` to install and `npm run build` to build. Keep the default output settings.
-4. Deploy without adding environment variables.
-5. Open the production URL signed out and verify the complete workflow, refresh, and Reset Demo.
-
-The prototype was developed with AI-assisted coding tools. Its implementation remains a focused Next.js application with deterministic workflow rules and tests.
 
 The [project story](PROJECT-STORY.md) also documents the evolution and evaluation approach.
 
@@ -293,5 +237,3 @@ The [project story](PROJECT-STORY.md) also documents the evolution and evaluatio
 **Source:**  
 https://github.com/Darrenrodricks/permitflow
 
-**Live demo:**  
-Coming soon
