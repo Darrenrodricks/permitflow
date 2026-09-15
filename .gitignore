@@ -8,3 +8,7 @@ out/
 
 # Local review packages
 PermitFlow-review.zip
+
+# Private presentation and project-story drafts
+LOOM-SCRIPT.md
+PROJECT-STORY.md

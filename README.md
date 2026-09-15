@@ -18,7 +18,7 @@ Guided intake, pre-submission validation, and structured reviewer workflows can 
 
 ## Demo
 
-A public deployment URL is not yet available. See [the recording script](LOOM-SCRIPT.md) and the walkthrough below. Uploads and AI outputs use prepared fixtures; no real files are processed.
+A public deployment URL is not yet available. See the walkthrough below. Uploads and AI outputs use prepared fixtures; no real files are processed.
 
 ## What I built
 
