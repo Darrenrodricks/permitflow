@@ -6,7 +6,7 @@ const copy = {
   drainage: {
     label: "Help with drainage or culvert",
     title: "What does this mean?",
-    body: "Select Yes if your project changes how water flows around the driveway, roadside ditch, drainage pipe, or culvert.",
+    body: "Drainage is how water flows away from the road and driveway. A culvert is a pipe or channel that carries water beneath a driveway or road. Select Yes if your work changes that flow.",
     examples: [
       "Replacing or modifying a pipe beneath the driveway",
       "Widening a driveway over an existing roadside ditch",
