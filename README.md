@@ -1,133 +1,297 @@
 # PermitFlow
 
-A prototype Highway Work Permit workflow for the New York State Department of Transportation.
+PermitFlow is a prototype Highway Work Permit workflow for the New York State Department of Transportation.
 
-## Problem
+It was built around a simple product hypothesis:
 
-Incomplete applications create repeated applicant/reviewer cycles. Missing documents and unclear technical details slow reviews and make the next step difficult to understand. PermitFlow focuses on reducing avoidable back-and-forth within one residential driveway workflow.
+> Applicants should not need to understand every NYSDOT requirement before starting an application. The system should translate project details into clear requirements, catch avoidable gaps before submission, and give NYSDOT staff a structured package for human review.
+
+This prototype focuses specifically on the residential driveway permit journey.
+
+---
+
+## The problem
+
+Highway Work Permit applicants may be homeowners, contractors, utilities, or other organizations performing work within the state highway right-of-way.
+
+For infrequent applicants, it can be difficult to determine:
+
+- which requirements apply to a specific project
+- which supporting documents are required
+- whether technical concepts such as drainage or culverts apply
+- what information must appear in submitted plans
+- what needs to happen after NYSDOT requests a revision
+
+When required information is missing or unclear, the application may need to move back and forth between the applicant and NYSDOT before technical review can be completed.
+
+PermitFlow explores whether **guided requirements, pre-submission checks, and a structured review workflow** can reduce avoidable review cycles while preserving NYSDOT staff judgment.
+
+No measured impact is claimed by this prototype.
+
+---
 
 ## Product hypothesis
 
-Guided intake, pre-submission validation, and structured reviewer workflows can help increase first-review completeness and reduce review cycles. Readiness indicates administrative completeness, not technical approval: an application can be 100% ready to submit and still need an engineering clarification.
+The prototype focuses on one question:
 
-## Project story
+> Can we improve first-review completeness by helping applicants understand what applies to their project and resolving avoidable issues before the application reaches NYSDOT staff?
 
-Read [the problem, prototype evolution, and end-to-end workflow](PROJECT-STORY.md), including product decisions, evaluation criteria, and future direction.
+Rather than attempting to reproduce the entire Highway Work Permit system, PermitFlow focuses on a single residential driveway workflow.
 
-## Product decisions
+The goal is to provide:
 
-- **Adaptive requirements:** Applicants should not need to interpret agency policy before starting. Project answers reveal the information and documents requested by this scoped workflow.
-- **AI assists; staff decide:** Prepared extraction and summary findings illustrate how AI could reduce administrative work. NYSDOT retains technical review and approval authority.
-- **Focused scope:** One residential driveway case tests intake, early issue detection, and structured review rather than recreating a statewide permitting system.
+- clearer requirements for applicants
+- earlier identification of missing information
+- clearer revision requests
+- a structured package for NYSDOT reviewers
+- visibility into what was resolved before submission
+- continued human ownership of technical review and approval
 
-## Demo
+---
 
-A public deployment URL is not yet available. See the walkthrough below. Uploads and AI outputs use prepared fixtures; no real files are processed.
+## How the prototype evolved
 
-## What I built
+The product changed as the underlying problem became clearer.
 
-- Guided residential driveway application with editable, seeded details
-- Contextual contractor insurance requirements
-- Document readiness, moving from 86% to 100% after the site plan is uploaded and its missing culvert diameter corrected
-- AI-assisted administrative review and application summary
-- Applicant status tracking
-- Reviewer queue, search, and status filters
-- Structured administrative, engineering, and drainage review
-- Revision request and resubmission workflow
-- Human-controlled permit approval and printable confirmation
-- Operational dashboard with clearly labeled illustrative metrics
-- Visible Applicant / NYSDOT Staff switcher
-- Automatic browser-local draft and permit persistence, plus Reset Demo
+| Stage                            | Focus                                                  | What changed                                                                                                                                                                                                                  | Why it mattered                                                                                                 |
+| -------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| **1. Core journey**              | Connect applicant intake to staff review               | Built the applicant dashboard, guided application, document flow, submission readiness, reviewer queue, revision workflow, approval state, and operations dashboard                                                           | Established one complete permit journey from application through approval                                       |
+| **2. Workflow reliability**      | Make the journey coherent and repeatable               | Added shared validation, guarded state transitions, locked submitted fields, browser persistence, accurate next actions, and a demo reset                                                                                     | Prevented impossible workflow states and made the prototype reliable to demonstrate                             |
+| **3. Adaptive requirements**     | Help applicants understand what their project requires | Added contractor-dependent requirements, drainage Yes / No / Not sure states, contextual help, document requirements, missing culvert-diameter detection, and correction before submission                                    | Moved the product beyond checking whether a document exists to checking whether required information is present |
+| **4. Structured review handoff** | Make the applicant-side improvement visible to staff   | Added staff visibility into pre-submission checks, a separate technical revision for culvert material, clearer staff and applicant language, disciplined AI-assisted review labels, and explicit submission-readiness wording | Connected applicant guidance to reviewer efficiency while preserving human technical judgment                   |
 
-## Deliberately out of scope
+The key shift was from building a **better digital form** to building an **adaptive requirements workflow**.
 
-- Production authentication
-- NY.gov / ADFS integration
-- Payments
-- Full PDF collaboration
+PermitFlow does not expect the applicant to know NYSDOT policy in advance. Their answers progressively determine what information, documents, and reviews apply to the project.
+
+---
+
+## End-to-end workflow
+
+The primary demo follows permit **HWP-26-1842**, a residential driveway modification.
+
+1. The applicant starts a residential driveway application.
+2. They describe the work and project location.
+3. Their answers dynamically affect the application requirements.
+   - Contractor work adds contractor information and insurance requirements.
+   - A site plan is always required for driveway work. Drainage impact adds culvert-dimension and drainage-review requirements.
+   - Applicants who are unsure whether drainage is affected can flag the question for NYSDOT rather than making a technical determination themselves.
+4. The applicant enters their information and contractor details.
+5. Supporting documents are added to the application.
+6. A prepared document check flags that a proposed culvert diameter was not detected in the uploaded site plan.
+7. The applicant uploads a corrected plan with the proposed **18-inch culvert diameter** before submitting. The prototype loads a prepared corrected document to demonstrate this step.
+8. The application reaches **100% ready to submit**.
+   - This represents administrative submission readiness, not technical approval.
+9. The permit enters the NYSDOT review queue.
+10. Staff review the application summary, submitted information, documents, and pre-submission checks.
+11. The reviewer can see that the missing culvert diameter was resolved before the application reached NYSDOT.
+12. During technical review, staff request a separate clarification: the proposed culvert material.
+13. The applicant submits a revised plan confirming reinforced concrete while retaining the 18-inch diameter.
+14. Staff review the revision, resolve the request, and approve the permit.
+15. The workflow ends with an approval confirmation and an illustrative operations dashboard.
+
+This distinction is intentional:
+
+**PermitFlow aims to remove avoidable administrative back-and-forth, not replace technical review.**
+
+---
+
+## Adaptive requirements
+
+One of the central product decisions was to avoid requiring applicants to understand government terminology and policy before they can begin.
+
+For example:
+
+### Contractor selected
+
+If a contractor will perform the work, PermitFlow automatically adds:
+
+- contractor information
+- proof of insurance
+
+### Drainage impact selected
+
+A site plan is required for all driveway applications in this prototype. If the project affects drainage or a culvert, PermitFlow also requires:
+
+- proposed culvert dimensions on the site plan
+- drainage review
+
+### Applicant is unsure
+
+If the applicant does not know whether their project affects drainage, they can select **Not sure**.
+
+PermitFlow carries that uncertainty forward for NYSDOT staff instead of forcing the applicant to make a technical determination.
+
+Contextual explanations are also provided for unfamiliar concepts such as drainage, culverts, and insurance terminology.
+
+---
+
+## AI-assisted review
+
+The proposed role of AI is to reduce administrative effort, not to make government decisions. This prototype demonstrates that role using prepared outputs rather than live model calls.
+
+The prototype demonstrates AI-assisted workflows such as:
+
+- extracting administrative information from an insurance document
+- summarizing an application for a reviewer
+- identifying potential review considerations
+- flagging missing information in submitted materials
+
+AI outputs are deterministic fixtures in the prototype so the demo remains reliable.
+
+A production implementation could combine:
+
+- model-based extraction
+- deterministic agency rules
+- source evidence
+- confidence thresholds
+- required human verification
+
+NYSDOT staff would retain responsibility for technical review and final approval.
+
+---
+
+## What exists today
+
+The prototype currently includes:
+
+- one complete interactive permit journey: **HWP-26-1842**
+- four read-only sample permit cases
+- applicant and NYSDOT staff experiences
+- adaptive permit requirements
+- contextual guidance for unfamiliar terminology
+- contractor insurance review
+- pre-submission document checks
+- applicant readiness tracking
+- reviewer queue and application workspace
+- revision requests and resubmission
+- permit approval
+- illustrative operations metrics
+- deterministic demo data
+- browser-local state persistence
+- a resettable demo state
+
+The prototype does **not** include:
+
+- production authentication
+- NY.gov or ADFS integration
+- a production backend or database
+- secure production document storage
+- real PDF or image extraction
+- live AI model calls
+- payments or refunds
 - GIS integrations
-- Full permit catalog
-- Production AI infrastructure
-- Production database/security architecture
-- Real uploads, notifications, or legal permit issuance
+- collaborative PDF markup
+- external NYSDOT integrations
+- production permit issuance
 
-## AI implementation
+The workflow has been tested locally through the complete applicant-to-approval journey. Workflow tests and TypeScript validation cover readiness, state transitions, and the revision workflow. Uploads and AI outputs use prepared fixtures; no real documents are processed.
 
-AI outputs in the prototype are deterministic fixtures for demo reliability. No model calls or external integrations are used. The simulated insurance review identifies administrative information; the application summary highlights review considerations. Neither approves an application.
+---
 
-A production implementation could combine model-based document extraction and summarization with deterministic rules and required human verification. It would need extraction evidence, confidence handling, auditability, and validation against agency requirements.
+## Product decisions and scope
+
+A major goal of the project was deciding what **not** to build.
+
+The full Highway Work Permit system involves significantly more functionality than this prototype attempts to reproduce.
+
+Instead, the prototype focuses on the portion of the workflow most useful for testing the product hypothesis:
+
+> Can better applicant guidance and pre-submission validation produce a more review-ready application?
+
+Several major capabilities were intentionally left out, including production authentication, payments, agency integrations, GIS, full document collaboration, and production infrastructure.
+
+Those capabilities are important to a complete implementation, but they are not necessary to evaluate the core workflow demonstrated here.
+
+---
+
+## How I would evaluate the product
+
+Before claiming that PermitFlow improves the process, I would establish a baseline with NYSDOT and measure outcomes such as:
+
+- percentage of applications complete on first review
+- average number of applicant-reviewer cycles per permit
+- median time from submission to approval
+- time applications spend awaiting applicant action
+- reviewer administrative handling time
+- frequency and type of missing-information requests
+
+The most important initial metric would likely be:
+
+> **First-review completeness**
+
+If more applications arrive with the information reviewers need, downstream cycle time should become easier to improve.
+
+---
+
+## Future direction
+
+Before a production pilot, I would validate the workflow directly with both applicants and NYSDOT reviewers.
+
+Potential next steps include:
+
+- secure data and document storage
+- production identity and access controls
+- real document extraction with source evidence
+- configurable permit-requirement rules
+- NYSDOT system integrations
+- notifications
+- payments
+- document versioning and markup
+- GIS and location-aware requirements
+- audit logging and reporting
+- measurement against real permit-processing baselines
+
+I would prioritize these based on observed workflow bottlenecks rather than attempting to reproduce every RFP requirement at once.
+
+---
+
+## Central product idea
+
+PermitFlow is built around one principle:
+
+> **Applicants describe their project. The system explains what applies, catches avoidable gaps early, and gives NYSDOT staff a structured submission while preserving human judgment for technical review and approval.**
+
+---
 
 ## Run locally
 
-Use Node.js 22 LTS (`nvm use` reads the included `.nvmrc`).
+Use Node.js 22 LTS (22.6 or newer). The included `.nvmrc` selects Node 22.
 
 ```bash
-npm ci
+npm install
 npm run dev
 ```
 
-Open http://localhost:3000.
+Open http://localhost:3000. No environment variables, API keys, database, or external services are required.
 
 ```bash
-npm test # Requires Node.js 22.6+ for TypeScript stripping
+npm test
 npm run typecheck
 npm run build
 npm start
 ```
 
-The project uses Next.js App Router, TypeScript, Tailwind CSS 4, shadcn/ui source components backed by Radix Dialog/Slot, and Lucide icons. System fonts avoid a build-time font service dependency.
+Production builds use the supported Next.js Webpack build option.
 
-## Demo flow
-
-1. Start in **Applicant → My Permits**. Select **Start a new permit**.
-2. Choose **Residential driveway**, leave **Modify existing driveway** selected, and continue.
-3. Walk through **Project → Applicant → Contractor**. Selecting a contractor reveals the insurance requirement.
-4. In **Documents**, inspect the deterministic insurance analysis. The site plan starts missing.
-5. Continue to **Review**: **86% ready**, six of seven requirements complete.
-6. Select **Upload site plan** to simulate `Site-Plan-v1.pdf`. The prepared check flags a missing culvert diameter. Select **Upload corrected plan** to simulate correcting the plan with an 18-inch diameter. Readiness becomes **100%**.
-7. Select **Submit to NYSDOT**. The permit is routed to Region 1.
-8. Switch to **NYSDOT Staff**, then open **HWP-26-1842** in **Review Queue**.
-9. Read the application summary, checklist, and document details. Select **Request revision → Send request** using the prepared culvert-material request (the diameter was already corrected before submission).
-10. Switch to **Applicant**, select **View request**, and **Upload revised plan**. This simulates `Site-Plan-v2.pdf` confirming **reinforced concrete** as the material and retaining the **18-inch culvert diameter**.
-11. Switch back to **NYSDOT Staff**, open the permit, inspect Revision 2, and select **Mark resolved**. In this scoped demo, this records technical verification and completes both engineering and drainage reviews.
-12. Select **Approve permit**, inspect the confirmation, and open the operational dashboard.
-13. Use **Reset Demo** in the footer and confirm to restore the initial draft before presenting again.
-
-The primary record begins as a draft and only enters the staff queue after submission. Other permit records open read-only case details with project scope, next actions, document summaries, and activity. Only one live demo permit is supported; starting another application after submission leads to the existing record. Upload controls load prepared document summaries; they do not read real files. Dates and operational metrics are fixed for a consistent presentation.
-
-## State and implementation
-
-- `app/page.tsx`: persona navigation, dialogs, and local persistence
-- `components/guided-application.tsx`: guided intake, validation cues, and step focus/scroll navigation
-- `components/reviewer-workspace.tsx`: review checks, documents, and grouped expandable submitted record
-- `components/presentation.tsx`: shared card, status, and heading components
-- `app/globals.css`: navy/light public-sector visual theme, responsive layouts, print styles
-- `app/layout.tsx`, `app/icon.svg`: metadata and application identity
-- `components/ui/`: reusable shadcn/ui button and accessible Radix dialog primitives
-- `lib/permit.ts`: typed Permit, Document, Review, RevisionRequest, readiness requirements, and guarded state transitions
-- `data/fixtures.ts`: supporting queue rows and the revision message
-- `tests/workflow.test.ts`: state-machine and readiness regression coverage
-
-Permit state is stored under `permitflow-demo-v1` in localStorage. It is scoped to the browser and origin. Persona and page selection reset on refresh; the saved permit remains. Reset Demo resets the record and returns to the applicant dashboard. If browser storage is unavailable, the demo continues with in-memory state. Do not use real personal information in this prototype.
+Permit state is saved in this browser only. Refresh returns to the applicant dashboard while preserving the permit. **Reset Demo** restores the original draft. Do not enter real personal information.
 
 ## Deploy to Vercel
 
-1. Push this directory to a Git repository.
-2. Import the repository into Vercel and select **Next.js**.
-3. Select Node.js 22.x or newer supported LTS. Keep the standard `npm run build` command and default Next.js output settings.
-4. Deploy. No environment variables, databases, or API keys are required.
-5. Open the deployment, reset the demo, and rehearse the complete journey in the same browser.
+1. Import `Darrenrodricks/permitflow` into Vercel.
+2. Select the **Next.js** preset, repository root, and **Node.js 24.x**.
+3. Use `npm ci` to install and `npm run build` to build. Keep the default output settings.
+4. Deploy without adding environment variables.
+5. Open the production URL signed out and verify the complete workflow, refresh, and Reset Demo.
 
-Deployment does not synchronize records across users or browsers. Before a production pilot, validate requirements with NYSDOT, add secure persistence and authorization, and test real document workflows with agency reviewers.
+The prototype was developed with AI-assisted coding tools. Its implementation remains a focused Next.js application with deterministic workflow rules and tests.
 
-## Review hardening
+The [project story](PROJECT-STORY.md) also documents the evolution and evaluation approach.
 
-Final readiness and submission use shared validation, including applicant/contractor email, required fields, signature, and date order. Review links identify corrections without restricting step navigation. Submitted project values are locked, while the explicit revision workflow remains available. Staff can inspect exact submitted scope, contacts, and dates next to the deterministic summary.
+## Links
 
-Validation in this workspace: the default Turbopack build may fail with a local-worker port permission error even after elevation. `npm run build -- --webpack` is the supported fallback; verify the unchanged default command in an unrestricted terminal or Vercel before deployment.
+**Source:**  
+https://github.com/Darrenrodricks/permitflow
 
-## Adaptive requirements
-
-Contractor and drainage answers drive the displayed requirements and submission guard. Site plans remain required for driveway work. A Yes drainage answer adds culvert dimensions and drainage review; Not sure flags the uncertainty for NYSDOT, while No does not trigger drainage-specific dimensions. Click the information icons for plain-language explanations.
-
-For the primary scenario, uploading the initial plan leaves readiness at 86% until its missing diameter is corrected using the prepared sample action. The reviewer sees the recorded pre-submission correction. A later revision request addresses culvert material, avoiding a duplicate diameter request. Existing saved permits that did not use the correction retain the original diameter revision fixture. No real document parsing or AI calls occur.
+**Live demo:**  
+Coming soon

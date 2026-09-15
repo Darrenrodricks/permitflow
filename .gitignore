@@ -11,3 +11,10 @@ PermitFlow-review.zip
 
 # Private presentation draft
 LOOM-SCRIPT.md
+
+# Local verification and editor artifacts
+QA-REPORT.md
+.vercel/
+.vscode/
+.idea/
+*.log
