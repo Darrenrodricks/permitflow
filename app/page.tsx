@@ -607,7 +607,7 @@ export default function PermitFlow() {
                           <small>
                             {i === 0
                               ? "Create or modify access to a residential property"
-                              : "Not included in this prototype"}
+                              : "Not available for online application"}
                           </small>
                         </span>
                         {i === 0 && <ChevronRight size={20} />}
@@ -1170,8 +1170,8 @@ export default function PermitFlow() {
                   <CheckRow>Revision requests per permit</CheckRow>
                   <CheckRow>Time awaiting applicant action</CheckRow>
                   <p className="fine-print">
-                    Metrics are illustrative and do not change with the demo
-                    permit.
+                    Metrics are illustrative and do not change as applications
+                    progress.
                   </p>
                 </div>
               </div>
@@ -1320,9 +1320,7 @@ export default function PermitFlow() {
           ) : (
             <>
               <DialogTitle>{doc}</DialogTitle>
-              <DialogDescription>
-                Sample document details · Prepared for this prototype
-              </DialogDescription>
+              <DialogDescription>Document details</DialogDescription>
               <div className="document-preview">
                 <FileText size={35} />
                 <h3>
