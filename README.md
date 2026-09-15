@@ -240,8 +240,6 @@ PermitFlow is built around one principle:
 > **Applicants describe their project. The system explains what applies, catches avoidable gaps early, and gives NYSDOT staff a structured submission while preserving human judgment for technical review and approval.**
 
 
-The [project story](PROJECT-STORY.md) also documents the evolution and evaluation approach.
-
 ## Links
 
 **Source:**  
