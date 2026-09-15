@@ -10,6 +10,10 @@ Incomplete applications create repeated applicant/reviewer cycles. Missing docum
 
 Guided intake, pre-submission validation, and structured reviewer workflows can help increase first-review completeness and reduce review cycles. Readiness indicates administrative completeness, not technical approval: an application can be 100% ready to submit and still need an engineering clarification.
 
+## Project story
+
+Read [the problem, prototype evolution, and end-to-end workflow](PROJECT-STORY.md), including product decisions, evaluation criteria, and future direction.
+
 ## Product decisions
 
 - **Adaptive requirements:** Applicants should not need to interpret agency policy before starting. Project answers reveal the information and documents requested by this scoped workflow.
